@@ -15,7 +15,7 @@
     <select name="airport" id="airport-select">
       <option value="AUS">AUS</option>
       <option value="DFW">DFW</option>
-      <option value="DEN">DEN</option>
+      <option value="DEN" selected>DEN</option>
       <option value="LAX">LAX</option>
       <option value="SAN">SAN</option>
     </select>
@@ -23,7 +23,8 @@
     <input type="number" name="flightNo" id="flight-no-input" min="10" max="9999">
 
     <label for="departure-input">Departure Date:</label>
-    <input type="datetime-local" name="departs" id="departure-input" >
+    <input type="datetime-local" name="departs" id="departure-input" 
+    value="<%= new Date().toUTCString().slice(0,16) %>">
   
     <button type="submit">Add Flight</button>
   </form>
