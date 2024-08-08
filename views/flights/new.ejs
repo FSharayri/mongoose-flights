@@ -24,7 +24,7 @@
 
     <label for="departure-input">Departure Date:</label>
     <input type="datetime-local" name="departs" id="departure-input" 
-    value="<%= new Date().toUTCString().slice(0,16) %>">
+    value="<%=date.toISOString().slice(0,16)%>">
   
     <button type="submit">Add Flight</button>
   </form>

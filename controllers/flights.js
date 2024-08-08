@@ -14,11 +14,16 @@ async function index(req,res){
 }
 
 function newFlight(req,res){
-  res.render('flights/new', {title: 'Add Flight'})
+  let date = new Date()
+  date.setFullYear(date.getFullYear()+1)
+  res.render('flights/new', {date , title: 'Add Flight'})
 }
 
 async function create(req,res){
   try{
+  // for ( let key in req.body){
+  //   if (req.body[key])
+  // }
   const flight = await Flight.create(req.body)
   res.redirect('/flights')
   }catch(err){
@@ -51,7 +56,8 @@ async function show(req,res){
 async function edit(req,res){
   try{
   const flight = await Flight.findById(req.params.flightId)
-  res.render('flights/edit', {flight , title : 'Edit Flight'})
+  let date = flight.departs
+  res.render('flights/edit', {flight ,date, title : 'Edit Flight'})
   }catch(err){
     console.log(err)
     res.redirect('/')
