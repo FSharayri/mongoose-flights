@@ -6,7 +6,8 @@ async function index(req,res){
   try{
   const flights = await Flight.find({})
   console.log(flights[1]['departs'])
-  flights.sort((a,b)=>{-a.departs.getFullYear()+b.departs.getFullYear()})
+  
+  flights.sort((a,b)=>{return a.departs-b.departs})
   res.render('flights', {flights , title : 'All Flights'})
   }catch(err){
     console.log(err)
@@ -47,8 +48,8 @@ async function deleteFlight(req,res){
 async function show(req,res){
   try{
   const flight = await Flight.findById(req.params.flightId)
-  const meals = await Meal.find({})
-  flight.meals.populate()
+  const meals = await Meal.find({_id: {$nin: flight.meals}})
+  await flight.populate('meals')
   res.render('flights/show', {flight ,meals, title : 'Flight Details'})
   }catch(err){
     console.log(err)
@@ -59,7 +60,7 @@ async function show(req,res){
 async function edit(req,res){
   try{
   const flight = await Flight.findById(req.params.flightId)
-  let date = flight.departs
+  let date = new Date(flight.departs - new Date().getTimezoneOffset() * 60000)
   res.render('flights/edit', {flight ,date, title : 'Edit Flight'})
   }catch(err){
     console.log(err)
@@ -104,10 +105,10 @@ async function deleteTicket(req,res){
 
 async function addMeal(req,res){
   try{
-    const mealId = req.body.mealId
     const flight = await Flight.findById(req.params.flightId)
-    await flight.meals.push(mealId)
-    await flight.meals.populate()
+
+    await flight.meals.push(req.body.mealId)
+    await flight.save()
     res.redirect(`/flights/${req.params.flightId}`)
   }catch(err){
     console.log(err)

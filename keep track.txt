@@ -1,4 +1,3 @@
-Display a default departure date of 1 year from the current date when displaying the new flight form.
 
 2. Code these new User Stories:
     - AAU, I want to view the list of flights by departure date in ascending order.
@@ -7,4 +6,3 @@ Display a default departure date of 1 year from the current date when displaying
 
 
 
-the number is not filling in on edit

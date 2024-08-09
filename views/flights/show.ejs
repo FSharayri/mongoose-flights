@@ -19,7 +19,9 @@
     <div>Departure: </div>
     <div><%= flight.departs %></div>
     <div>Meals: </div>
-    <div><%= flight.meals.toString() %></div>
+    <div><% flight.meals.forEach(meal => { %>
+      <%= meal.name %> , 
+    <% }) %></div>
     <a href="/flights/<%= flight._id %>/edit">
       <button>Edit Flight</button>
     </a>
@@ -32,8 +34,49 @@
       <button type="submit">Add Meal to Flight</button>
     </form>
     <div><br><br></div>
+    <form 
+    action="/flights/<%= flight._id %>/tickets"
+    method="POST"
+  >
+    <label for="ticketSeat">Seat:</label>
+    <input name="seat" id="ticketSeat" required pattern="[A-F][1-9]\d?">></input>
+    <label for="price">Price:</label>
+    <input type="number" name="price" id="price">
+    <button type="submit">Add Ticket</button>
+  </form><div></div>
+    <div>Flight Tickets: </div>
+    <div></div>
+    <div id="seats-table">
+    <% if (flight.tickets.length) { %>
+      <table>
+      <thead>
+        <tr>
+          <th>Seat</th>
+          <th>Price</th>
+        </tr>
+        <br>
+      </thead>
+      <tbody>
+        <% flight.tickets.forEach(ticket => { %>
+        <tr>
+          <td><%= ticket.seat %></td>
+          <td><%= ticket.price %></td>
+          <td><%= ticket._id %></td>
+          <td>
+            <form 
+              action="/flights/<%= flight._id %>/tickets/<%= ticket._id %>?_method=DELETE" 
+              method="POST"
+            >
+              <button type="submit">❌</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } else { %>
       <h3>No Tickets Yet</h3>
-   
+    <% } %>
     </div>
   </section>
 </main>

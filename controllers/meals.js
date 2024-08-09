@@ -14,9 +14,17 @@ async function newMeal(req,res){
 }
 async function create(req,res){
   try{
-   const meal = await Meal.create(req.body) 
-   const meals = await Meal.find({})
-   res.render('meals/new' ,{meals,title : 'Add Meal'})
+    let meals = await Meal.find({})
+    const mealExists = await Meal.findOne({ name: req.body.name })
+    console.log(mealExists)
+    if (!mealExists){
+      const meal = await Meal.create(req.body) 
+      meals = await Meal.find({})
+      res.render('meals/new' ,{meals,title : 'Add Meal'})
+    }else{
+      meals = await Meal.find({})
+      res.render('meals/new' ,{meals,title : 'Add Meal'})
+    }
   }catch(err){
     console.log(err)
     res.redirect('/')
