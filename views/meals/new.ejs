@@ -1,0 +1,40 @@
+<%- include('../partials/html-head') %>
+<link rel="stylesheet" href="/stylesheets/Meals/new.css">
+<%- include('../partials/nav') %>
+
+<main>
+  <h1><%= title %></h1>
+  <form 
+    action="/meals"
+    method="POST"
+  >
+    <label for="meal">Meal:</label>
+    <input name="name" id="meal" ></input>
+    <button type="submit">Add Meal</button>
+  </form><div> Please check Meals below (don't create duplicates)</div>
+    <div>Existing Meals: </div>
+    <div></div>
+    <div id="seats-table">
+      <table>
+      <thead>
+        <br>
+      </thead>
+      <tbody>
+        <% meals.forEach(meal => { %>
+        <tr>
+          <td><%= meal.name %></td>
+          <td>
+            <form 
+              action="/meals/<%= meal._id %>?_method=DELETE" 
+              method="POST"
+            >
+              <button type="submit">❌</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+</main>
+
+<%- include('../partials/footer') %>

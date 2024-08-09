@@ -17,6 +17,12 @@ router.post('/', flightsCtrl.create)
 
 router.delete('/:flightId', flightsCtrl.delete)
 
-router.put('/flightId', flightsCtrl.update)
+router.put('/:flightId', flightsCtrl.update)
+
+router.post('/:flightId/tickets', flightsCtrl.createTicket)
+
+router.delete('/:flightId/tickets/:ticketId', flightsCtrl.deleteTicket)
+
+router.put('/:flightId/meals', flightsCtrl.addMeal)
 
 export { router }
